@@ -9,7 +9,26 @@ import Update exposing (Msg(..))
 view model =
     div
         []
-        [ (viewGrid model.grid) ]
+        [ viewLevel model.level
+        , viewMoves model.moves
+        , viewGrid model.grid
+        ]
+
+
+viewLevel level =
+    div
+        [ id "level" ]
+        [ text "Level: "
+        , text (toString (level + 1))
+        ]
+
+
+viewMoves moves =
+    div
+        [ id "moves" ]
+        [ text "Moves: "
+        , text (toString moves)
+        ]
 
 
 viewGrid grid =

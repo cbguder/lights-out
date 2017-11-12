@@ -1,5 +1,7 @@
 module Update exposing (Msg(..), update)
 
+import Model exposing (level)
+
 
 type Msg
     = Toggle Int Int
@@ -8,19 +10,47 @@ type Msg
 update msg model =
     case msg of
         Toggle x y ->
-            { model | grid = (play x y model.grid) }
+            toggle x y model
 
 
-play x y grid =
+toggle x y model =
+    let
+        toggledGrid =
+            toggleAll x y model.grid
+
+        nextLevel =
+            model.level + 1
+    in
+        if isBlankGrid toggledGrid then
+            { grid = level nextLevel
+            , level = nextLevel
+            , moves = 0
+            }
+        else
+            { model
+                | grid = toggledGrid
+                , moves = model.moves + 1
+            }
+
+
+isBlankGrid grid =
+    List.all isBlankRow grid
+
+
+isBlankRow row =
+    List.all not row
+
+
+toggleAll x y grid =
     grid
-        |> toggle x y
-        |> toggle x (y + 1)
-        |> toggle x (y - 1)
-        |> toggle (x + 1) y
-        |> toggle (x - 1) y
+        |> toggleSafe x y
+        |> toggleSafe x (y + 1)
+        |> toggleSafe x (y - 1)
+        |> toggleSafe (x + 1) y
+        |> toggleSafe (x - 1) y
 
 
-toggle x y grid =
+toggleSafe x y grid =
     let
         size =
             List.length grid

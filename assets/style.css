@@ -1,4 +1,8 @@
-#grid {
+body {
+  font-family: sans-serif;
+}
+
+#level, #moves, #grid {
   margin: 16px;
 }
 
