@@ -1,0 +1,15 @@
+#grid {
+  margin: 16px;
+}
+
+.cell {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin: 4px;
+  background-color: #999;
+}
+
+.cell.on {
+  background-color: #33f;
+}
